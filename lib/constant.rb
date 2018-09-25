@@ -1,0 +1,6 @@
+MAX_INT = 2**(0.size*8 - 1) - 1
+MIN_INT = -2**(0.size*8 - 1)
+
+MAX_QUALITY = 50
+MIN_QUALITY = 0
+LEGENDARY_ITEM_QUALITY = 80

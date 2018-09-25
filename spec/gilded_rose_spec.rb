@@ -1,10 +1,11 @@
 require_relative '../lib/gilded_rose'
+require_relative '../lib/constant'
 
 describe "#update_quality" do
 
   context "with a single item" do
-    let(:initial_sell_in) { 5 }
-    let(:initial_quality) { 10 }
+    let(:initial_sell_in) { rand(MIN_INT...MAX_INT) }
+    let(:initial_quality) { rand(MIN_QUALITY...(MAX_QUALITY + 1)) }
     let(:name) { "item" }
     let(:item) { Item.new(name, initial_sell_in, initial_quality) }
 
@@ -16,6 +17,8 @@ describe "#update_quality" do
       end
 
       context "before sell date" do
+        let(:initial_sell_in) { rand(1...MAX_INT) }
+
         it "will reduce quality by 1" do
           expect(item.quality).to eql(initial_quality - 1)
         end
@@ -30,7 +33,7 @@ describe "#update_quality" do
       end
 
       context "after sell date" do
-        let(:initial_sell_in) { -1 }
+        let(:initial_sell_in) { rand(MIN_INT...0) }
 
         it "will reduce quality by 2" do
           expect(item.quality).to eql(initial_quality - 2)
@@ -38,7 +41,7 @@ describe "#update_quality" do
       end
 
       context "at minimum quality" do
-        let(:initial_quality) { 0 }
+        let(:initial_quality) { MIN_QUALITY }
 
         it "will not reduce quality" do
           expect(item.quality).to eql(initial_quality)
@@ -48,7 +51,7 @@ describe "#update_quality" do
 
     context "Legendary Item" do
       let(:name) { "Sulfuras, Hand of Ragnaros" }
-      let(:initial_quality) { 80 }
+      let(:initial_quality) { LEGENDARY_ITEM_QUALITY }
 
       it "will never be on sale" do
         expect(item.sell_in).to eql(initial_sell_in)
@@ -56,7 +59,7 @@ describe "#update_quality" do
 
       it "will never reduce quality" do
         expect(item.quality).to eql(initial_quality)
-        expect(item.quality).to eql(80)
+        expect(item.quality).to eql(LEGENDARY_ITEM_QUALITY)
       end
     end
 
@@ -68,6 +71,8 @@ describe "#update_quality" do
       end
 
       context "before sell date" do
+        let(:initial_sell_in) { rand(1...MAX_INT) }
+
         it "will increase quality by 1" do
           expect(item.quality).to eql(initial_quality + 1)
         end
@@ -82,7 +87,7 @@ describe "#update_quality" do
       end
 
       context "after sell date" do
-        let(:initial_sell_in) { -1 }
+        let(:initial_sell_in) { rand(MIN_INT...0) }
 
         it "will increase quality by 2" do
           expect(item.quality).to eql(initial_quality + 2)
@@ -90,7 +95,7 @@ describe "#update_quality" do
       end
 
       context "at maximum quality" do
-        let(:initial_quality) { 50 }
+        let(:initial_quality) { MAX_QUALITY }
 
         it "will not increase quality" do
           expect(item.quality).to eql(initial_quality)
@@ -104,7 +109,7 @@ describe "#update_quality" do
       [
         Item.new("NORMAL ITEM", 5, 10),
         Item.new("Aged Brie", 3, 10),
-        Item.new("Sulfuras, Hand of Ragnaros", 3, 80),
+        Item.new("Sulfuras, Hand of Ragnaros", 3, LEGENDARY_ITEM_QUALITY),
       ]
     }
 
@@ -119,7 +124,7 @@ describe "#update_quality" do
     it "update all items' quality correctly" do
       expect(items[0].quality).to eql(9)
       expect(items[1].quality).to eql(11)
-      expect(items[2].quality).to eql(80)
+      expect(items[2].quality).to eql(LEGENDARY_ITEM_QUALITY)
     end
   end
 end
