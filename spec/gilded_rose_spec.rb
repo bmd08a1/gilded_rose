@@ -173,6 +173,46 @@ describe "#update_quality" do
         end
       end
     end
+
+    context "Conjured" do
+      let(:name) { 'Conjured'}
+
+      it "will reduce number of sell days left" do
+        expect(item.sell_in).to eql(initial_sell_in - 1)
+      end
+
+      context "before sell date" do
+        let(:initial_sell_in) { rand(1...MAX_INT) }
+
+        it "will reduce quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality - 2*UNIT)
+        end
+      end
+
+      context "on sell date" do
+        let(:initial_sell_in) { 0 }
+
+        it "will reduce quality by 4 unit(s)" do
+          expect(item.quality).to eql(initial_quality - 4*UNIT)
+        end
+      end
+
+      context "after sell date" do
+        let(:initial_sell_in) { rand(MIN_INT...0) }
+
+        it "will reduce quality by 4 unit(s)" do
+          expect(item.quality).to eql(initial_quality - 4*UNIT)
+        end
+      end
+
+      context "at minimum quality" do
+        let(:initial_quality) { MIN_QUALITY }
+
+        it "will not reduce quality" do
+          expect(item.quality).to eql(initial_quality)
+        end
+      end
+    end
   end
 
   context "with multiple items" do
@@ -181,7 +221,8 @@ describe "#update_quality" do
         Item.new("NORMAL ITEM", 5, 10),
         Item.new("Aged Brie", 3, 10),
         Item.new("Sulfuras, Hand of Ragnaros", 3, LEGENDARY_ITEM_QUALITY),
-        Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 39)
+        Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 39),
+        Item.new("Conjured", 0, 41)
       ]
     }
 
@@ -192,6 +233,7 @@ describe "#update_quality" do
       expect(items[1].sell_in).to eql(2)
       expect(items[2].sell_in).to eql(3)
       expect(items[3].sell_in).to eql(10)
+      expect(items[4].sell_in).to eql(-1)
     end
 
     it "update all items' quality correctly" do
@@ -199,6 +241,7 @@ describe "#update_quality" do
       expect(items[1].quality).to eql(11)
       expect(items[2].quality).to eql(LEGENDARY_ITEM_QUALITY)
       expect(items[3].quality).to eql(40)
+      expect(items[4].quality).to eql(37)
     end
   end
 end
