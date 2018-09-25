@@ -23,6 +23,7 @@ describe "#update_quality" do
 
       context "on sell date" do
         let(:initial_sell_in) { 0 }
+
         it "will reduce quality by 2" do
           expect(item.quality).to eql(initial_quality - 2)
         end
@@ -30,6 +31,7 @@ describe "#update_quality" do
 
       context "after sell date" do
         let(:initial_sell_in) { -1 }
+
         it "will reduce quality by 2" do
           expect(item.quality).to eql(initial_quality - 2)
         end
@@ -37,6 +39,7 @@ describe "#update_quality" do
 
       context "at minimum quality" do
         let(:initial_quality) { 0 }
+
         it "will not reduce quality" do
           expect(item.quality).to eql(initial_quality)
         end
@@ -54,6 +57,44 @@ describe "#update_quality" do
       it "will never reduce quality" do
         expect(item.quality).to eql(initial_quality)
         expect(item.quality).to eql(80)
+      end
+    end
+
+    context "Aged Brie" do
+      let(:name) { "Aged Brie" }
+
+      it "will reduce number of sell days left" do
+        expect(item.sell_in).to eql(initial_sell_in - 1)
+      end
+
+      context "before sell date" do
+        it "will increase quality by 1" do
+          expect(item.quality).to eql(initial_quality + 1)
+        end
+      end
+
+      context "on sell date" do
+        let(:initial_sell_in) { 0 }
+
+        it "will increase quality by 2" do
+          expect(item.quality).to eql(initial_quality + 2)
+        end
+      end
+
+      context "after sell date" do
+        let(:initial_sell_in) { -1 }
+
+        it "will increase quality by 2" do
+          expect(item.quality).to eql(initial_quality + 2)
+        end
+      end
+
+      context "at maximum quality" do
+        let(:initial_quality) { 50 }
+
+        it "will not increase quality" do
+          expect(item.quality).to eql(initial_quality)
+        end
       end
     end
   end
