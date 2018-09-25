@@ -54,8 +54,14 @@ describe "#update_quality" do
 
     before { update_quality(items) }
 
-    it "your specs here" do
-      pending
+    it "update all items' number of sell days left correctly" do
+      expect(items[0].sell_in).to eql(4)
+      expect(items[1].sell_in).to eql(2)
+    end
+
+    it "update all items' quality correctly" do
+      expect(items[0].quality).to eql(9)
+      expect(items[1].quality).to eql(11)
     end
   end
 end
