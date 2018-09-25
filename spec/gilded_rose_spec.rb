@@ -18,24 +18,24 @@ describe "#update_quality" do
       context "before sell date" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
-        it "will reduce quality by 1" do
-          expect(item.quality).to eql(initial_quality - 1)
+        it "will reduce quality by 1 unit(s)" do
+          expect(item.quality).to eql(initial_quality - UNIT)
         end
       end
 
       context "on sell date" do
         let(:initial_sell_in) { 0 }
 
-        it "will reduce quality by 2" do
-          expect(item.quality).to eql(initial_quality - 2)
+        it "will reduce quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality - 2*UNIT)
         end
       end
 
       context "after sell date" do
         let(:initial_sell_in) { rand(MIN_INT...0) }
 
-        it "will reduce quality by 2" do
-          expect(item.quality).to eql(initial_quality - 2)
+        it "will reduce quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality - 2*UNIT)
         end
       end
 
@@ -72,24 +72,24 @@ describe "#update_quality" do
       context "before sell date" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
-        it "will increase quality by 1" do
-          expect(item.quality).to eql(initial_quality + 1)
+        it "will increase quality by 1 unit(s)" do
+          expect(item.quality).to eql(initial_quality + UNIT)
         end
       end
 
       context "on sell date" do
         let(:initial_sell_in) { 0 }
 
-        it "will increase quality by 2" do
-          expect(item.quality).to eql(initial_quality + 2)
+        it "will increase quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality + 2*UNIT)
         end
       end
 
       context "after sell date" do
         let(:initial_sell_in) { rand(MIN_INT...0) }
 
-        it "will increase quality by 2" do
-          expect(item.quality).to eql(initial_quality + 2)
+        it "will increase quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality + 2*UNIT)
         end
       end
 
@@ -112,8 +112,8 @@ describe "#update_quality" do
       context "at least 11 days before sell date" do
         let(:initial_sell_in) { rand(11...MAX_INT) }
 
-        it "will increase quality by 1" do
-          expect(item.quality).to eql(initial_quality + 1)
+        it "will increase quality by 1 unit(s)" do
+          expect(item.quality).to eql(initial_quality + UNIT)
         end
 
         context "at maximum quality" do
@@ -128,8 +128,8 @@ describe "#update_quality" do
       context "6 to 10 days before sell date" do
         let(:initial_sell_in) { rand(6...11) }
 
-        it "will increase quality by 2" do
-          expect(item.quality).to eql(initial_quality + 2)
+        it "will increase quality by 2 unit(s)" do
+          expect(item.quality).to eql(initial_quality + 2*UNIT)
         end
 
         context "at maximum quality" do
@@ -144,8 +144,8 @@ describe "#update_quality" do
       context "1 to 5 days before sell date" do
         let(:initial_sell_in) { rand(1...6) }
 
-        it "will increase quality by 3" do
-          expect(item.quality).to eql(initial_quality + 3)
+        it "will increase quality by 3 unit(s)" do
+          expect(item.quality).to eql(initial_quality + 3*UNIT)
         end
 
         context "at maximum quality" do

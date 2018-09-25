@@ -6,21 +6,21 @@ def update_quality(items)
     case item.name
     when 'Aged Brie'
       if item.quality < MAX_QUALITY
-        item.quality += 1
+        item.quality += UNIT
       end
     when 'Backstage passes to a TAFKAL80ETC concert'
       if item.quality < MAX_QUALITY
-        item.quality += 1
+        item.quality += UNIT
         if item.sell_in < 11
-          item.quality += 1
+          item.quality += UNIT
         end
         if item.sell_in < 6
-          item.quality += 1
+          item.quality += UNIT
         end
       end
     else
       if item.quality > MIN_QUALITY
-        item.quality -= 1
+        item.quality -= UNIT
       end
     end
     item.sell_in -= 1
@@ -28,13 +28,13 @@ def update_quality(items)
       case item.name
       when 'Aged Brie'
         if item.quality < MAX_QUALITY
-          item.quality += 1
+          item.quality += UNIT
         end
       when 'Backstage passes to a TAFKAL80ETC concert'
         item.quality = MIN_QUALITY
       else
         if item.quality > MIN_QUALITY
-          item.quality -= 1
+          item.quality -= UNIT
         end
       end
     end
