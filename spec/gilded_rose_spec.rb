@@ -1,5 +1,4 @@
 require_relative '../lib/gilded_rose'
-require_relative '../lib/constant'
 
 describe "#update_quality" do
 
