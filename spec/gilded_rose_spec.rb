@@ -10,8 +10,37 @@ describe "#update_quality" do
 
     before { update_quality([item]) }
 
-    it "your specs here" do
-      pending
+    context "Normal Item" do
+      it "will reduce number of sell days left" do
+        expect(item.sell_in).to eql(initial_sell_in - 1)
+      end
+
+      context "before sell date" do
+        it "will reduce quality by 1" do
+          expect(item.quality).to eql(initial_quality - 1)
+        end
+      end
+
+      context "on sell date" do
+        let(:initial_sell_in) { 0 }
+        it "will reduce quality by 2" do
+          expect(item.quality).to eql(initial_quality - 2)
+        end
+      end
+
+      context "after sell date" do
+        let(:initial_sell_in) { -1 }
+        it "will reduce quality by 2" do
+          expect(item.quality).to eql(initial_quality - 2)
+        end
+      end
+
+      context "at minimum quality" do
+        let(:initial_quality) { 0 }
+        it "will not reduce quality" do
+          expect(item.quality).to eql(initial_quality)
+        end
+      end
     end
   end
 
