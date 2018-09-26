@@ -37,14 +37,6 @@ describe "#update_quality" do
           expect(item.quality).to eql(expected_quality)
         end
       end
-
-      context "at minimum quality" do
-        let(:initial_quality) { MIN_QUALITY }
-
-        it "will not reduce quality" do
-          expect(item.quality).to eql(initial_quality)
-        end
-      end
     end
 
     context "Legendary Item" do
@@ -86,14 +78,6 @@ describe "#update_quality" do
           expect(item.quality).to eql(expected_quality)
         end
       end
-
-      context "at maximum quality" do
-        let(:initial_quality) { MAX_QUALITY }
-
-        it "will not increase quality" do
-          expect(item.quality).to eql(initial_quality)
-        end
-      end
     end
 
     context "Backstage Passes" do
@@ -106,14 +90,6 @@ describe "#update_quality" do
           expected_quality = [initial_quality + UNIT, MAX_QUALITY].min
           expect(item.quality).to eql(expected_quality)
         end
-
-        context "at maximum quality" do
-          let(:initial_quality) { MAX_QUALITY }
-
-          it "will not increase quality" do
-            expect(item.quality).to eql(initial_quality)
-          end
-        end
       end
 
       context "6 to 10 days before sell date" do
@@ -123,14 +99,6 @@ describe "#update_quality" do
           expected_quality = [initial_quality + 2*UNIT, MAX_QUALITY].min
           expect(item.quality).to eql(expected_quality)
         end
-
-        context "at maximum quality" do
-          let(:initial_quality) { MAX_QUALITY }
-
-          it "will not increase quality" do
-            expect(item.quality).to eql(initial_quality)
-          end
-        end
       end
 
       context "1 to 5 days before sell date" do
@@ -139,14 +107,6 @@ describe "#update_quality" do
         it "will increase quality by 3 unit(s)" do
           expected_quality = [initial_quality + 3*UNIT, MAX_QUALITY].min
           expect(item.quality).to eql(expected_quality)
-        end
-
-        context "at maximum quality" do
-          let(:initial_quality) { MAX_QUALITY }
-
-          it "will not increase quality" do
-            expect(item.quality).to eql(initial_quality)
-          end
         end
       end
 
@@ -194,14 +154,6 @@ describe "#update_quality" do
         it "will reduce quality by 4 unit(s)" do
           expected_quality = [initial_quality - 4*UNIT, MIN_QUALITY].max
           expect(item.quality).to eql(expected_quality)
-        end
-      end
-
-      context "at minimum quality" do
-        let(:initial_quality) { MIN_QUALITY }
-
-        it "will not reduce quality" do
-          expect(item.quality).to eql(initial_quality)
         end
       end
     end
