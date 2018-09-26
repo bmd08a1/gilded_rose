@@ -15,7 +15,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
         it "will reduce quality by 1 unit(s)" do
-          expect(item.quality).to eql(initial_quality - UNIT)
+          expected_quality = [initial_quality - UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -23,7 +24,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { 0 }
 
         it "will reduce quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality - 2*UNIT)
+          expected_quality = [initial_quality - 2*UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -31,7 +33,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(MIN_INT...0) }
 
         it "will reduce quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality - 2*UNIT)
+          expected_quality = [initial_quality - 2*UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -61,7 +64,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
         it "will increase quality by 1 unit(s)" do
-          expect(item.quality).to eql(initial_quality + UNIT)
+          expected_quality = [initial_quality + UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -69,7 +73,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { 0 }
 
         it "will increase quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality + 2*UNIT)
+          expected_quality = [initial_quality + 2*UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -77,7 +82,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(MIN_INT...0) }
 
         it "will increase quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality + 2*UNIT)
+          expected_quality = [initial_quality + 2*UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -97,7 +103,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(11...MAX_INT) }
 
         it "will increase quality by 1 unit(s)" do
-          expect(item.quality).to eql(initial_quality + UNIT)
+          expected_quality = [initial_quality + UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
 
         context "at maximum quality" do
@@ -113,7 +120,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(6...11) }
 
         it "will increase quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality + 2*UNIT)
+          expected_quality = [initial_quality + 2*UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
 
         context "at maximum quality" do
@@ -129,7 +137,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(1...6) }
 
         it "will increase quality by 3 unit(s)" do
-          expect(item.quality).to eql(initial_quality + 3*UNIT)
+          expected_quality = [initial_quality + 3*UNIT, MAX_QUALITY].min
+          expect(item.quality).to eql(expected_quality)
         end
 
         context "at maximum quality" do
@@ -165,7 +174,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
         it "will reduce quality by 2 unit(s)" do
-          expect(item.quality).to eql(initial_quality - 2*UNIT)
+          expected_quality = [initial_quality - 2*UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -173,7 +183,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { 0 }
 
         it "will reduce quality by 4 unit(s)" do
-          expect(item.quality).to eql(initial_quality - 4*UNIT)
+          expected_quality = [initial_quality - 4*UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
@@ -181,7 +192,8 @@ describe "#update_quality" do
         let(:initial_sell_in) { rand(MIN_INT...0) }
 
         it "will reduce quality by 4 unit(s)" do
-          expect(item.quality).to eql(initial_quality - 4*UNIT)
+          expected_quality = [initial_quality - 4*UNIT, MIN_QUALITY].max
+          expect(item.quality).to eql(expected_quality)
         end
       end
 
