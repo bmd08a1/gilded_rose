@@ -11,10 +11,6 @@ describe "#update_quality" do
     before { update_quality([item]) }
 
     context "Normal Item" do
-      it "will reduce number of sell days left" do
-        expect(item.sell_in).to eql(initial_sell_in - 1)
-      end
-
       context "before sell date" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
@@ -52,10 +48,6 @@ describe "#update_quality" do
       let(:name) { "Sulfuras, Hand of Ragnaros" }
       let(:initial_quality) { LEGENDARY_ITEM_QUALITY }
 
-      it "will never be on sale" do
-        expect(item.sell_in).to eql(initial_sell_in)
-      end
-
       it "will never reduce quality" do
         expect(item.quality).to eql(initial_quality)
         expect(item.quality).to eql(LEGENDARY_ITEM_QUALITY)
@@ -64,10 +56,6 @@ describe "#update_quality" do
 
     context "Aged Brie" do
       let(:name) { "Aged Brie" }
-
-      it "will reduce number of sell days left" do
-        expect(item.sell_in).to eql(initial_sell_in - 1)
-      end
 
       context "before sell date" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
@@ -104,10 +92,6 @@ describe "#update_quality" do
 
     context "Backstage Passes" do
       let(:name) { "Backstage passes to a TAFKAL80ETC concert" }
-
-      it "will reduce number of sell days left" do
-        expect(item.sell_in).to eql(initial_sell_in - 1)
-      end
 
       context "at least 11 days before sell date" do
         let(:initial_sell_in) { rand(11...MAX_INT) }
@@ -177,10 +161,6 @@ describe "#update_quality" do
     context "Conjured" do
       let(:name) { 'Conjured'}
 
-      it "will reduce number of sell days left" do
-        expect(item.sell_in).to eql(initial_sell_in - 1)
-      end
-
       context "before sell date" do
         let(:initial_sell_in) { rand(1...MAX_INT) }
 
@@ -242,6 +222,34 @@ describe "#update_quality" do
       expect(items[2].quality).to eql(LEGENDARY_ITEM_QUALITY)
       expect(items[3].quality).to eql(40)
       expect(items[4].quality).to eql(37)
+    end
+  end
+end
+
+describe "#decrease_sell_in" do
+  let(:initial_sell_in) { rand(MIN_INT...MAX_INT) }
+  let(:initial_quality) { rand(0...51) }
+  before { decrease_sell_in(item) }
+
+  context "for items on sale" do
+    names = ["Normal item", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Conjured"]
+
+    names.each do |name|
+      let(:item) { Item.new(name, initial_sell_in, initial_quality) }
+
+      context "#{name}" do
+        it "will reduce number of sell days left by 1" do
+          expect(item.sell_in).to eql(initial_sell_in - 1)
+        end
+      end
+    end
+  end
+
+  context "for legendary item" do
+    let(:item) { Item.new("Sulfuras, Hand of Ragnaros", initial_sell_in, LEGENDARY_ITEM_QUALITY) }
+
+    it "will not reduce number of sell days left" do
+      expect(item.sell_in).to eql(initial_sell_in)
     end
   end
 end

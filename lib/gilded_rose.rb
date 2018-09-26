@@ -29,7 +29,7 @@ def update_quality(items)
       end
     end
 
-    item.sell_in -= 1
+    decrease_sell_in item
 
     if item.sell_in < 0
       case item.name
@@ -50,6 +50,11 @@ def update_quality(items)
       end
     end
   end
+end
+
+def decrease_sell_in item
+  return if item.name == 'Sulfuras, Hand of Ragnaros'
+  item.sell_in -= 1
 end
 
 ######### DO NOT CHANGE BELOW #########
